@@ -1,4 +1,4 @@
-package com.example.cleantodoapp.data
+package com.example.cleantodoapp.data.database
 
 import androidx.room.Entity
 import androidx.room.PrimaryKey
@@ -8,5 +8,5 @@ data class TodoEntity (
     @PrimaryKey(autoGenerate = true)
     val id: Int = 0,
     val title: String,
-    val isDone: Boolean = false
+
 )

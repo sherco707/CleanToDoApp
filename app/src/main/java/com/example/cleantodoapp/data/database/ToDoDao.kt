@@ -1,4 +1,4 @@
-package com.example.cleantodoapp.data
+package com.example.cleantodoapp.data.database
 
 import androidx.room.Dao
 import androidx.room.Delete
@@ -11,15 +11,15 @@ import kotlinx.coroutines.flow.Flow
 @Dao
 interface ToDoDao {
 
-    @Query("SELECT * FROM mytodos")
-    fun getAllTodos(): Flow<List<TodoEntity>>
+    @Query("SELECT * FROM mytodos where id=1")
+    fun getTodos(): TodoEntity?
 
     @Insert(onConflict = OnConflictStrategy.REPLACE)
-    suspend fun insert(todo: TodoEntity)
+     fun insert(todo: TodoEntity)
 
     @Update
-    suspend fun update(todo: TodoEntity)
+     fun update(todo: TodoEntity)
 
     @Delete
-    suspend fun delete(todo: TodoEntity)
+     fun delete(todo: TodoEntity)
 }

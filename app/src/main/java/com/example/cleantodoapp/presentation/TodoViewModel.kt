@@ -3,52 +3,40 @@ package com.example.cleantodoapp.presentation
 import android.app.Application
 import androidx.lifecycle.AndroidViewModel
 import androidx.lifecycle.viewModelScope
-import androidx.room.Room
-import com.example.cleantodoapp.data.ToDoDataRepasitory
-import com.example.cleantodoapp.data.ToDoDatabase
-import com.example.cleantodoapp.domain.AddTodoUseCase
-import com.example.cleantodoapp.domain.Todo
+import com.example.cleantodoapp.data.Imple
+import com.example.cleantodoapp.data.database.ToDoDatabase
+import com.example.cleantodoapp.domain.usecase.AddTodoUseCase
+import com.example.cleantodoapp.domain.entity.Todo
+import com.example.cleantodoapp.domain.usecase.DeleteTodoUseCase
+import com.example.cleantodoapp.domain.usecase.GetTodosUsecase
+import com.example.cleantodoapp.domain.usecase.UpdateTodoUsecase
 import kotlinx.coroutines.flow.SharingStarted
 import kotlinx.coroutines.flow.stateIn
 import kotlinx.coroutines.launch
 
-open class TodoViewModel(application: Application): AndroidViewModel(application) {
+class TodoViewModel(application: Application) : AndroidViewModel(application) {
 
-    private val db = Room.databaseBuilder(
-        application,
-        ToDoDatabase::class.java,
-        "my_todo_db"
-    ).build()
+    private val imple = Imple(application)
+    private val getUscase = GetTodosUsecase(imple)
+    private val addUseCase = AddTodoUseCase(imple)
+    private val deleteUseCase = DeleteTodoUseCase(imple)
+    private val updateUseCase = UpdateTodoUsecase(imple)
 
-    private val toDoRepasitory = ToDoDataRepasitory(db.todoDao())
-    private val addUseCase = AddTodoUseCase(toDoRepasitory)
 
-    open val todos = toDoRepasitory.getTodos().stateIn(
-        viewModelScope, SharingStarted.Lazily,emptyList()
-    )
-
-    fun addTodo(title:String){
-        viewModelScope.launch {
-            addUseCase.execute(title)
-        }
+    fun addTodo(title: String) {
+        val todo = Todo(title = title)
+        addUseCase(todo)
     }
 
-    fun toggleTodoDone(todo: Todo){
-        viewModelScope.launch {
-            toDoRepasitory.updateTodo(todo.copy(isDone = !todo.isDone))
-        }
+    fun deleteTodo(todo: Todo) {
+        deleteUseCase(todo)
     }
 
-    fun editTodo(todo: Todo, newTitle:String){
-        viewModelScope.launch {
-            if(newTitle.isNotBlank()){
-                toDoRepasitory.updateTodo(todo.copy(title = newTitle))
-            }
-        }
+    fun getTodos(): List<Todo>{
+        return getUscase()
     }
-    fun delateTodo(todo: Todo){
-        viewModelScope.launch {
-            toDoRepasitory.deleteTodo(todo)
-        }
+
+    fun editTodo(todo: Todo) {
+        updateUseCase(todo)
     }
 }
