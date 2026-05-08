@@ -32,11 +32,11 @@ class TodoViewModel(application: Application) : AndroidViewModel(application) {
         deleteUseCase(todo)
     }
 
-    fun getTodos(): List<Todo>{
-        return getUscase()
+    fun getTodos():Todo{
+        return getUscase()  /*xatolik sho'da e:Return type mismatch: expected 'com.example.cleantodoapp.domain.entity.Todo', actual 'kotlin.collections.List<com.example.cleantodoapp.domain.entity.Todo>'*/
     }
 
-    fun editTodo(todo: Todo) {
+    fun updateTodo(todo: Todo) {
         updateUseCase(todo)
     }
 }

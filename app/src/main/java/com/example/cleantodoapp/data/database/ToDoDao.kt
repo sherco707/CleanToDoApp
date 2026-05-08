@@ -12,7 +12,7 @@ import kotlinx.coroutines.flow.Flow
 interface ToDoDao {
 
     @Query("SELECT * FROM mytodos where id=1")
-    fun getTodos(): TodoEntity?
+    fun getTodos(): TodoEntity
 
     @Insert(onConflict = OnConflictStrategy.REPLACE)
      fun insert(todo: TodoEntity)

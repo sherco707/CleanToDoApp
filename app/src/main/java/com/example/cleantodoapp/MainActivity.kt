@@ -32,19 +32,13 @@ class MainActivity : AppCompatActivity() {
             if (title.length > 3) {
                 // 1. ViewModel orqali bazaga saqlash
                 viewModel.addTodo(title)
-
-                // 2. Bazadan yangilangan ro'yxatni olish
-                val updatedList = viewModel.getTodos()
-                // 3. Adapterni yangilash (submitList orqali)
-                recAdapter.submitList(updatedList)
-
                 // 4. Inputni tozalash
                 binding.edtxt.text.clear()
 
             } else {
                 val dialog = AlertDialog.Builder(this)
                 dialog.setTitle("Xatolik !")
-                dialog.setMessage("Vazifa nomi juda qisqa!")
+                dialog.setMessage("Juda qisqa!")
                 dialog.show()
             }
         }
@@ -64,9 +58,7 @@ class MainActivity : AppCompatActivity() {
     }
 
     private fun refreshData() {
-        // toMutableList() qilish shart! Shunda ListAdapter yangi ro'yxat kelganini tushunadi
-        val newList = viewModel.getTodos().toMutableList()
-        recAdapter.submitList(newList)
+        viewModel.getTodos()
     }
 
     fun showEditDialog(todo: Todo) {
@@ -77,8 +69,8 @@ class MainActivity : AppCompatActivity() {
             .setTitle("Vazifani tahrirlash")
             .setView(editText)
             .setPositiveButton("Saqlash") { _, _ ->
-                val newTitle = editText.text.toString()
-                viewModel.editTodo(todo) // ViewModel'ga yuboramiz
+                editText.text.toString()
+                viewModel.updateTodo(todo) // ViewModel'ga yuboramiz
             }
             .setNegativeButton("Bekor qilish", null)
             .show()

@@ -13,7 +13,7 @@ class Imple(context: Context): ToDoRepasitory {
 
     override fun getTodos():Todo {
         val allTodos = db.getTodos()
-        return map.todoentityToTodo(getTodos())
+        return map.todoentityToTodo(allTodos)
     }
 
     override  fun addTodo(todo: Todo) {
