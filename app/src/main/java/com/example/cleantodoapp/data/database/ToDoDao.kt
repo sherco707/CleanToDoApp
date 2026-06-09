@@ -6,20 +6,20 @@ import androidx.room.Insert
 import androidx.room.OnConflictStrategy
 import androidx.room.Query
 import androidx.room.Update
+import kotlinx.coroutines.flow.Flow
 
 @Dao
 interface ToDoDao {
 
     @Query("SELECT * FROM mytodos ORDER BY createdAt DESC, id DESC")
-    fun getTodos(): List<TodoEntity>
+    fun observeTodos(): Flow<List<TodoEntity>>
 
     @Insert(onConflict = OnConflictStrategy.REPLACE)
-    fun addTitle(todo: TodoEntity)
-
+    suspend fun insert(todo: TodoEntity)
 
     @Update
-    fun update(todo: TodoEntity)
+    suspend fun update(todo: TodoEntity)
 
     @Delete
-    fun delete(todo: TodoEntity)
+    suspend fun delete(todo: TodoEntity)
 }
