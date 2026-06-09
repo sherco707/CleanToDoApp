@@ -10,7 +10,7 @@ import androidx.room.Update
 @Dao
 interface ToDoDao {
 
-    @Query("SELECT * FROM mytodos")
+    @Query("SELECT * FROM mytodos ORDER BY createdAt DESC, id DESC")
     fun getTodos(): List<TodoEntity>
 
     @Insert(onConflict = OnConflictStrategy.REPLACE)

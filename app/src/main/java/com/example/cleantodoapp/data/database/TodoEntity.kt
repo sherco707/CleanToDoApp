@@ -4,8 +4,10 @@ import androidx.room.Entity
 import androidx.room.PrimaryKey
 
 @Entity(tableName = "mytodos")
-data class TodoEntity (
+data class TodoEntity(
     @PrimaryKey(autoGenerate = true)
     val id: Int = 0,
     val title: String,
+    val createdAt: Long = System.currentTimeMillis(),
+    val isCompleted: Boolean = false,
 )

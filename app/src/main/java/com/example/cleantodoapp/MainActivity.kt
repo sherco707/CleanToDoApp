@@ -37,7 +37,11 @@ class MainActivity : AppCompatActivity() {
                 refreshTodos()
                 Toast.makeText(this, "Vazifa o'chirildi", Toast.LENGTH_SHORT).show()
             },
-            onEdit = { todo -> showEditDialog(todo) }
+            onEdit = { todo -> showEditDialog(todo) },
+            onStatusChanged = { todo, isCompleted ->
+                viewModel.updateTodo(todo.copy(isCompleted = isCompleted))
+                refreshTodos()
+            }
         )
 
         binding.recyclerView.apply {
