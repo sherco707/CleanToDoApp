@@ -6,7 +6,7 @@ class Mapper {
 
     fun todotoTodoentity(todo: Todo): TodoEntity{
 
-        return TodoEntity(title = todo.title )
+        return TodoEntity(id = todo.id,title = todo.title )
     }
     fun todoentityToTodo(todoEntity: TodoEntity): Todo{
         return Todo (id = todoEntity.id,title = todoEntity.title)

@@ -11,21 +11,21 @@ class Imple(context: Context): ToDoRepasitory {
     private val db= ToDoDatabase.getDb(context).todoDao()
     val map = Mapper()
 
-    override fun getTodos():Todo {
-        val allTodos = db.getTodos()
-        return map.todoentityToTodo(allTodos)
+    override fun getTodos(): List<Todo> {
+        val entityList = db.getTodos()
+        return entityList.map { map.todoentityToTodo(it) }
     }
 
     override  fun addTodo(todo: Todo) {
-        db.insert(map.todotoTodoentity(todo))
+    db.addTitle(map.todotoTodoentity(todo))
     }
 
-    override  fun updateTodo(todo: Todo) {
-
+    override fun updateTodo(todo: Todo) {
         db.update(map.todotoTodoentity(todo))
     }
 
-    override  fun deleteTodo(todo: Todo) {
+    override fun deleteTodo(todo: Todo) {
         db.delete(map.todotoTodoentity(todo))
     }
+
 }

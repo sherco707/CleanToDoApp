@@ -23,7 +23,7 @@ class TodoViewModel(application: Application) : AndroidViewModel(application) {
     private val updateUseCase = UpdateTodoUsecase(imple)
 
 
-    fun addTodo(title: String) {
+    fun addTodo(title: String,time: Int) {
         val todo = Todo(title = title)
         addUseCase(todo)
     }
@@ -32,8 +32,8 @@ class TodoViewModel(application: Application) : AndroidViewModel(application) {
         deleteUseCase(todo)
     }
 
-    fun getTodos():Todo{
-        return getUscase()  /*xatolik sho'da e:Return type mismatch: expected 'com.example.cleantodoapp.domain.entity.Todo', actual 'kotlin.collections.List<com.example.cleantodoapp.domain.entity.Todo>'*/
+    fun getTodos(): List<Todo> {
+        return getUscase()
     }
 
     fun updateTodo(todo: Todo) {
